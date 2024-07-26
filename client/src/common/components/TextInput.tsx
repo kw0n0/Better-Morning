@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { ChildRef } from '../../pages/form';
 
 type TextInputProps = {
   id: string;
@@ -9,36 +10,35 @@ type TextInputProps = {
   title: string;
 };
 
-const TextInput: React.FC<TextInputProps> = ({
-  id,
-  width,
-  height,
-  placeholder,
-  title,
-  ...props
-}) => {
-  const [value, setValue] = useState<string>('');
+const TextInput = forwardRef<ChildRef, TextInputProps>(
+  ({ id, width, height, placeholder, title }, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+    useImperativeHandle(ref, () => ({
+      getValue: () => {
+        if (inputRef.current) {
+          return { id, value: inputRef.current.value };
+        }
 
-  return (
-    <Container>
-      <StyledLabel htmlFor={id}>{title}</StyledLabel>
-      <StyledInput
-        id={id}
-        type="text"
-        width={width}
-        height={height}
-        value={value}
-        onChange={handleChange}
-        placeholder={placeholder}
-        {...props}
-      />
-    </Container>
-  );
-};
+        return { id: ' ', value: '' };
+      },
+    }));
+
+    return (
+      <Container>
+        <StyledLabel htmlFor={id}>{title}</StyledLabel>
+        <StyledInput
+          id={id}
+          type="text"
+          width={width}
+          height={height}
+          placeholder={placeholder}
+          ref={inputRef}
+        />
+      </Container>
+    );
+  }
+);
 const Container = styled.div`
   display: flex;
   flex-direction: column;

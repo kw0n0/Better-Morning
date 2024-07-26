@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { ChildRef } from '../../pages/form';
 
 type RangeInputProps = {
   id: string;
@@ -9,35 +10,37 @@ type RangeInputProps = {
   defaultValue?: string;
 };
 
-const RangeInput: React.FC<RangeInputProps> = ({
-  id,
-  width,
-  height,
-  title,
-  defaultValue,
-}) => {
-  const [value, setValue] = useState<string>(defaultValue || '5');
+const RangeInput = forwardRef<ChildRef, RangeInputProps>(
+  ({ id, width, height, title, defaultValue }, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+    useImperativeHandle(ref, () => ({
+      getValue: () => {
+        if (inputRef.current) {
+          return { id, value: inputRef.current.value };
+        }
 
-  return (
-    <Container>
-      <StyledLabel htmlFor={id}>{title}</StyledLabel>
-      <StyledInput
-        id={id}
-        type="range"
-        width={width}
-        height={height}
-        min="0"
-        max="10"
-        defaultValue={defaultValue || '5'}
-        onChange={handleChange}
-      ></StyledInput>
-    </Container>
-  );
-};
+        return { id: ' ', value: '' };
+      },
+    }));
+
+    return (
+      <Container>
+        <StyledLabel htmlFor={id}>{title}</StyledLabel>
+        <StyledInput
+          id={id}
+          type="range"
+          width={width}
+          height={height}
+          min="0"
+          max="10"
+          defaultValue={defaultValue || '5'}
+          ref={inputRef}
+        ></StyledInput>
+      </Container>
+    );
+  }
+);
 
 const Container = styled.div`
   display: flex;

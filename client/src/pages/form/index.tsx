@@ -1,9 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { useRef } from 'react';
 import TextInput from '../../common/components/TextInput';
 import TimeInput from '../../common/components/TimeInput';
 import RangeInput from '../../common/components/RangeInput';
 import CheckboxInput from '../../common/components/CheckboxInput';
+
+export type ChildRef = {
+  getValue: () => RequestInfo;
+};
+
+export type RequestInfo = {
+  id: string;
+  value: string | boolean;
+};
 
 function Form() {
   const SERVER_DATA = [
@@ -15,67 +25,101 @@ function Form() {
     { id: 5, type: 'checkbox', title: '목표 달성여부' },
   ];
 
+  const childRefs = useRef<ChildRef[]>([]);
+
+  const handleClick = () => {
+    const values = new Array<RequestInfo>();
+    childRefs.current.forEach((ref) => {
+      values.push(ref.getValue());
+    });
+
+    console.log('테스트', values);
+  };
+
   return (
-    <form
+    <div
       css={css`
         display: flex;
         flex-direction: column;
         align-items: center;
       `}
     >
-      {SERVER_DATA.map((item) => {
-        if (item.type === 'text') {
-          return (
-            <TextInput
-              key={item.id}
-              id={`${item.id}`}
-              width={400}
-              height={30}
-              placeholder={'텍스트를 입력해주세요'}
-              title={item.title}
-            />
-          );
-        }
+      <form
+        css={css`
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        `}
+      >
+        {SERVER_DATA.map((item) => {
+          if (item.type === 'text') {
+            return (
+              <TextInput
+                key={item.id}
+                id={`${item.id}`}
+                width={400}
+                height={30}
+                placeholder={'텍스트를 입력해주세요'}
+                title={item.title}
+                ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+              />
+            );
+          }
 
-        if (item.type === 'time') {
-          return (
-            <TimeInput
-              key={item.id}
-              id={`${item.id}`}
-              width={400}
-              height={30}
-              title={item.title}
-              defaultValue={item.defaultValue}
-            />
-          );
-        }
+          if (item.type === 'time') {
+            return (
+              <TimeInput
+                key={item.id}
+                id={`${item.id}`}
+                width={400}
+                height={30}
+                title={item.title}
+                defaultValue={item.defaultValue}
+                ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+              />
+            );
+          }
 
-        if (item.type === 'range') {
-          return (
-            <RangeInput
-              key={item.id}
-              id={`${item.id}`}
-              width={400}
-              height={30}
-              title={item.title}
-              defaultValue={item.defaultValue}
-            />
-          );
-        }
+          if (item.type === 'range') {
+            return (
+              <RangeInput
+                key={item.id}
+                id={`${item.id}`}
+                width={400}
+                height={30}
+                title={item.title}
+                defaultValue={item.defaultValue}
+                ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+              />
+            );
+          }
 
-        if (item.type === 'checkbox') {
-          return (
-            <CheckboxInput
-              key={item.id}
-              id={`${item.id}`}
-              width={400}
-              height={30}
-              title={item.title}
-            />
-          );
-        }
-      })}
-    </form>
+          if (item.type === 'checkbox') {
+            return (
+              <CheckboxInput
+                key={item.id}
+                id={`${item.id}`}
+                width={400}
+                height={30}
+                title={item.title}
+                ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+              />
+            );
+          }
+        })}
+      </form>
+
+      <button
+        css={css`
+          width: 400px;
+          height: 30px;
+          margin-top: 50px;
+        `}
+        onClick={handleClick}
+      >
+        인증하기
+      </button>
+    </div>
   );
 }
 

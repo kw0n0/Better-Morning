@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { ChildRef } from '../../pages/form';
 
 type CheckboxInputProps = {
   id: string;
@@ -8,34 +9,35 @@ type CheckboxInputProps = {
   title: string;
 };
 
-const TextInput: React.FC<CheckboxInputProps> = ({
-  id,
-  width,
-  height,
-  title,
-  ...props
-}) => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+const TextInput = forwardRef<ChildRef, CheckboxInputProps>(
+  ({ id, width, height, title }, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(event.target.checked);
-  };
+    useImperativeHandle(ref, () => ({
+      getValue: () => {
+        if (inputRef.current) {
+          return { id, value: inputRef.current.checked };
+        }
 
-  return (
-    <Container>
-      <StyledLabel htmlFor={id}>{title}</StyledLabel>
-      <StyledInput
-        id={id}
-        type="checkbox"
-        width={width}
-        height={height}
-        checked={isChecked}
-        onChange={handleChange}
-        {...props}
-      />
-    </Container>
-  );
-};
+        //TODO: 어떻게 대응하면 좋을지 공통적으로 체크
+        return { id: ' ', value: false };
+      },
+    }));
+
+    return (
+      <Container>
+        <StyledLabel htmlFor={id}>{title}</StyledLabel>
+        <StyledInput
+          id={id}
+          type="checkbox"
+          width={width}
+          height={height}
+          ref={inputRef}
+        />
+      </Container>
+    );
+  }
+);
 
 const Container = styled.div`
   display: flex;
