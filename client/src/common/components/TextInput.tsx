@@ -9,32 +9,36 @@ type TextInputProps = {
   title: string;
 };
 
-const TextInput: React.FC<TextInputProps> = React.memo(
-  ({ id, width, height, placeholder, title, ...props }) => {
-    const [value, setValue] = useState<string>('');
+const TextInput: React.FC<TextInputProps> = ({
+  id,
+  width,
+  height,
+  placeholder,
+  title,
+  ...props
+}) => {
+  const [value, setValue] = useState<string>('');
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(event.target.value);
-    };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
 
-    return (
-      <Container>
-        <StyledLabel htmlFor={id}>{title}</StyledLabel>
-        <StyledInput
-          id={id}
-          type="text"
-          width={width}
-          height={height}
-          value={value}
-          onChange={handleChange}
-          placeholder={placeholder}
-          {...props}
-        />
-      </Container>
-    );
-  }
-);
-
+  return (
+    <Container>
+      <StyledLabel htmlFor={id}>{title}</StyledLabel>
+      <StyledInput
+        id={id}
+        type="text"
+        width={width}
+        height={height}
+        value={value}
+        onChange={handleChange}
+        placeholder={placeholder}
+        {...props}
+      />
+    </Container>
+  );
+};
 const Container = styled.div`
   display: flex;
   flex-direction: column;
