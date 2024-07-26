@@ -2,12 +2,15 @@
 import { css } from '@emotion/react';
 import TextInput from '../../common/components/TextInput';
 import TimeInput from '../../common/components/TimeInput';
+import RangeInput from '../../common/components/RangeInput';
 
 function Form() {
   const SERVER_DATA = [
     { id: 0, type: 'text', title: '취침 30분전 행동?' },
     { id: 1, type: 'time', title: '취침 시간', defaultValue: '23:00' },
     { id: 2, type: 'time', title: '기상 시간', defaultValue: '06:00' },
+    { id: 3, type: 'text', title: '컨디션 기록 및 시도한 작은 습관' },
+    { id: 4, type: 'range', title: '컨디션 점수', defaultValue: '5' },
   ];
 
   return (
@@ -35,6 +38,19 @@ function Form() {
         if (item.type === 'time') {
           return (
             <TimeInput
+              key={item.id}
+              id={`${item.id}`}
+              width={400}
+              height={30}
+              title={item.title}
+              defaultValue={item.defaultValue}
+            />
+          );
+        }
+
+        if (item.type === 'range') {
+          return (
+            <RangeInput
               key={item.id}
               id={`${item.id}`}
               width={400}
