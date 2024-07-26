@@ -2,13 +2,15 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 
 type TextInputProps = {
+  id: string;
   width: number;
   height: number;
   placeholder?: string;
+  title: string;
 };
 
 const TextInput: React.FC<TextInputProps> = React.memo(
-  ({ width, height, placeholder, ...props }) => {
+  ({ id, width, height, placeholder, title, ...props }) => {
     const [value, setValue] = useState<string>('');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,18 +18,33 @@ const TextInput: React.FC<TextInputProps> = React.memo(
     };
 
     return (
-      <StyledInput
-        type="text"
-        width={width}
-        height={height}
-        value={value}
-        onChange={handleChange}
-        placeholder={placeholder}
-        {...props}
-      />
+      <Container>
+        <StyledLabel htmlFor={id}>{title}</StyledLabel>
+        <StyledInput
+          id={id}
+          type="text"
+          width={width}
+          height={height}
+          value={value}
+          onChange={handleChange}
+          placeholder={placeholder}
+          {...props}
+        />
+      </Container>
     );
   }
 );
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledLabel = styled.label`
+  padding: 10px 10px 10px 0;
+  font-size: 20px;
+  font-weight: bold;
+`;
 
 const StyledInput = styled.input<{ width: number; height: number }>`
   width: ${({ width }) => `${width}px`};

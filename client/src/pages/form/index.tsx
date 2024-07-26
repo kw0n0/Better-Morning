@@ -3,10 +3,7 @@ import { css } from '@emotion/react';
 import TextInput from '../../common/components/TextInput';
 
 function Form() {
-  const SERVER_DATA = [
-    { id: 0, type: 'text', placeholder: '텍스트를 입력해주세요' },
-    { id: 1, type: 'text', placeholder: '텍스트를 입력해주세요2' },
-  ];
+  const SERVER_DATA = [{ id: 0, type: 'text', title: '취침 30분전 행동?' }];
 
   return (
     <form
@@ -21,9 +18,11 @@ function Form() {
           return (
             <TextInput
               key={item.id}
+              id={`${item.id}`}
               width={400}
               height={30}
-              placeholder={item.placeholder}
+              placeholder={'텍스트를 입력해주세요'}
+              title={item.title}
             />
           );
         }
