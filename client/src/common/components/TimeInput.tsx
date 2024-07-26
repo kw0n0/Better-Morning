@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useState } from 'react';
 
 type TimeInputProps = {
   id: string;
@@ -16,6 +16,12 @@ const TimeInput: React.FC<TimeInputProps> = ({
   title,
   defaultValue,
 }) => {
+  const [value, setValue] = useState<string>(defaultValue || '5');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
   return (
     <Container>
       <StyledLabel htmlFor={id}>{title}</StyledLabel>
@@ -25,6 +31,7 @@ const TimeInput: React.FC<TimeInputProps> = ({
         width={width}
         height={height}
         defaultValue={defaultValue || '00:00'}
+        onChange={handleChange}
       ></StyledInput>
     </Container>
   );
