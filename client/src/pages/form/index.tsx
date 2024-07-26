@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import TextInput from '../../common/components/TextInput';
 import TimeInput from '../../common/components/TimeInput';
 import RangeInput from '../../common/components/RangeInput';
+import CheckboxInput from '../../common/components/CheckboxInput';
 
 function Form() {
   const SERVER_DATA = [
@@ -11,6 +12,7 @@ function Form() {
     { id: 2, type: 'time', title: '기상 시간', defaultValue: '06:00' },
     { id: 3, type: 'text', title: '컨디션 기록 및 시도한 작은 습관' },
     { id: 4, type: 'range', title: '컨디션 점수', defaultValue: '5' },
+    { id: 5, type: 'checkbox', title: '목표 달성여부' },
   ];
 
   return (
@@ -57,6 +59,18 @@ function Form() {
               height={30}
               title={item.title}
               defaultValue={item.defaultValue}
+            />
+          );
+        }
+
+        if (item.type === 'checkbox') {
+          return (
+            <CheckboxInput
+              key={item.id}
+              id={`${item.id}`}
+              width={400}
+              height={30}
+              title={item.title}
             />
           );
         }
