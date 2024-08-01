@@ -48,7 +48,6 @@ const Container = styled.div`
 `;
 
 const StyledLabel = styled.label`
-  padding: 10px 10px 10px 0;
   font-size: 20px;
   font-weight: bold;
 `;
@@ -56,7 +55,6 @@ const StyledLabel = styled.label`
 const StyledInput = styled.input<{ width: number; height: number }>`
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
-  padding: 0 10px 0 10px;
 `;
 
 export default RangeInput;
