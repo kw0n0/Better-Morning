@@ -5,6 +5,7 @@ import TextInput from '../../common/components/TextInput';
 import TimeInput from '../../common/components/TimeInput';
 import RangeInput from '../../common/components/RangeInput';
 import CheckboxInput from '../../common/components/CheckboxInput';
+import ImageInput from '../../common/components/ImageInput';
 
 export type ChildRef = {
   getValue: () => RequestInfo;
@@ -23,6 +24,7 @@ function Form() {
     { id: 3, type: 'text', title: '컨디션 기록 및 시도한 작은 습관' },
     { id: 4, type: 'range', title: '컨디션 점수', defaultValue: '5' },
     { id: 5, type: 'checkbox', title: '목표 달성여부' },
+    { id: 6, type: 'image', title: '목표 인증사진' },
   ];
 
   const childRefs = useRef<ChildRef[]>([]);
@@ -49,6 +51,7 @@ function Form() {
           display: flex;
           flex-direction: column;
           align-items: center;
+          gap: 30px;
         `}
       >
         {SERVER_DATA.map((item) => {
@@ -97,6 +100,19 @@ function Form() {
           if (item.type === 'checkbox') {
             return (
               <CheckboxInput
+                key={item.id}
+                id={`${item.id}`}
+                width={400}
+                height={30}
+                title={item.title}
+                ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+              />
+            );
+          }
+
+          if (item.type === 'image') {
+            return (
+              <ImageInput
                 key={item.id}
                 id={`${item.id}`}
                 width={400}
