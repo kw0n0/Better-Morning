@@ -61,71 +61,71 @@ function Form() {
         `}
       >
         {SERVER_DATA.map((item) => {
-          if (item.type === 'text') {
-            return (
-              <TextInput
-                key={item.id}
-                id={`${item.id}`}
-                width={320}
-                height={30}
-                placeholder={'텍스트를 입력해주세요'}
-                title={item.title}
-                ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
-              />
-            );
-          }
+          switch (item.type) {
+            case 'text':
+              return (
+                <TextInput
+                  key={item.id}
+                  id={`${item.id}`}
+                  width={320}
+                  height={30}
+                  placeholder={'텍스트를 입력해주세요'}
+                  title={item.title}
+                  ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+                />
+              );
 
-          if (item.type === 'time') {
-            return (
-              <TimeInput
-                key={item.id}
-                id={`${item.id}`}
-                width={320}
-                height={30}
-                title={item.title}
-                defaultValue={item.defaultValue}
-                ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
-              />
-            );
-          }
+            case 'time':
+              return (
+                <TimeInput
+                  key={item.id}
+                  id={`${item.id}`}
+                  width={320}
+                  height={30}
+                  title={item.title}
+                  defaultValue={item.defaultValue}
+                  ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+                />
+              );
 
-          if (item.type === 'range') {
-            return (
-              <RangeInput
-                key={item.id}
-                id={`${item.id}`}
-                width={320}
-                height={30}
-                title={item.title}
-                defaultValue={item.defaultValue}
-                ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
-              />
-            );
-          }
+            case 'range':
+              return (
+                <RangeInput
+                  key={item.id}
+                  id={`${item.id}`}
+                  width={320}
+                  height={30}
+                  title={item.title}
+                  defaultValue={item.defaultValue}
+                  ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+                />
+              );
 
-          if (item.type === 'checkbox') {
-            return (
-              <CheckboxInput
-                key={item.id}
-                id={`${item.id}`}
-                width={320}
-                height={30}
-                title={item.title}
-                ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
-              />
-            );
-          }
+            case 'checkbox':
+              return (
+                <CheckboxInput
+                  key={item.id}
+                  id={`${item.id}`}
+                  width={320}
+                  height={30}
+                  title={item.title}
+                  ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+                />
+              );
 
-          if (item.type === 'image') {
-            return (
-              <ImageInput
-                key={item.id}
-                id={`${item.id}`}
-                width={320}
-                title={item.title}
-                ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
-              />
-            );
+            case 'image':
+              return (
+                <ImageInput
+                  key={item.id}
+                  id={`${item.id}`}
+                  width={320}
+                  title={item.title}
+                  ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+                />
+              );
+
+            default:
+              return <></>;
           }
         })}
       </form>
