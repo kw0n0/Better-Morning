@@ -18,13 +18,18 @@ export type RequestInfo = {
 
 function Form() {
   const SERVER_DATA = [
-    { id: 0, type: 'text', title: '취침 30분전 행동?' },
+    {
+      id: 0,
+      type: 'text',
+      title: '취침 30분전 행동',
+    },
     { id: 1, type: 'time', title: '취침 시간', defaultValue: '23:00' },
     { id: 2, type: 'time', title: '기상 시간', defaultValue: '06:00' },
-    { id: 3, type: 'text', title: '컨디션 기록 및 시도한 작은 습관' },
-    { id: 4, type: 'range', title: '컨디션 점수', defaultValue: '5' },
-    { id: 5, type: 'checkbox', title: '목표 달성여부' },
-    { id: 6, type: 'image', title: '목표 인증사진' },
+    { id: 3, type: 'range', title: '컨디션 점수', defaultValue: '5' },
+    { id: 4, type: 'text', title: '컨디션 상세' },
+    // { id: 5, type: 'checkbox', title: '목표 달성여부' },
+    { id: 6, type: 'image', title: '취침 전 인증사진' },
+    { id: 7, type: 'image', title: '목표 인증사진' },
   ];
 
   const childRefs = useRef<ChildRef[]>([]);
@@ -44,6 +49,7 @@ function Form() {
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin-top: 30px;
       `}
     >
       <form
@@ -60,7 +66,7 @@ function Form() {
               <TextInput
                 key={item.id}
                 id={`${item.id}`}
-                width={400}
+                width={320}
                 height={30}
                 placeholder={'텍스트를 입력해주세요'}
                 title={item.title}
@@ -74,7 +80,7 @@ function Form() {
               <TimeInput
                 key={item.id}
                 id={`${item.id}`}
-                width={400}
+                width={320}
                 height={30}
                 title={item.title}
                 defaultValue={item.defaultValue}
@@ -88,7 +94,7 @@ function Form() {
               <RangeInput
                 key={item.id}
                 id={`${item.id}`}
-                width={400}
+                width={320}
                 height={30}
                 title={item.title}
                 defaultValue={item.defaultValue}
@@ -102,7 +108,7 @@ function Form() {
               <CheckboxInput
                 key={item.id}
                 id={`${item.id}`}
-                width={400}
+                width={320}
                 height={30}
                 title={item.title}
                 ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
@@ -115,8 +121,7 @@ function Form() {
               <ImageInput
                 key={item.id}
                 id={`${item.id}`}
-                width={400}
-                height={30}
+                width={320}
                 title={item.title}
                 ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
               />
@@ -127,7 +132,7 @@ function Form() {
 
       <button
         css={css`
-          width: 400px;
+          width: 320px;
           height: 30px;
           margin-top: 50px;
         `}
