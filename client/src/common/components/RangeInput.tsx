@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { ChildRef } from '../../pages/form';
+import { InputLabel } from './InputLabel';
 
 type RangeInputProps = {
   id: string;
@@ -26,7 +27,7 @@ const RangeInput = forwardRef<ChildRef, RangeInputProps>(
 
     return (
       <Container>
-        <StyledLabel htmlFor={id}>{title}</StyledLabel>
+        <InputLabel id={id} title={title} />
         <StyledInput
           id={id}
           type="range"
@@ -45,11 +46,6 @@ const RangeInput = forwardRef<ChildRef, RangeInputProps>(
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const StyledLabel = styled.label`
-  font-size: 20px;
-  font-weight: bold;
 `;
 
 const StyledInput = styled.input<{ width: number; height: number }>`

@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { ChildRef } from '../../pages/form';
+import { InputLabel } from './InputLabel';
 
 type ImageInputProps = {
   id: string;
@@ -32,8 +33,7 @@ const ImageInput = forwardRef<ChildRef, ImageInputProps>(
 
     return (
       <Container>
-        <StyledLabel htmlFor={id}>{title}</StyledLabel>
-
+        <InputLabel id={id} title={title} />
         <StyledInput
           id={id}
           type="file"
@@ -52,11 +52,6 @@ const ImageInput = forwardRef<ChildRef, ImageInputProps>(
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const StyledLabel = styled.label`
-  font-size: 20px;
-  font-weight: bold;
 `;
 
 const StyledInput = styled.input<{ width: number; height: number }>`

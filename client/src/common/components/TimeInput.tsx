@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { ChildRef } from '../../pages/form';
+import { InputLabel } from './InputLabel';
 
 type TimeInputProps = {
   id: string;
@@ -26,7 +27,7 @@ const TimeInput = forwardRef<ChildRef, TimeInputProps>(
 
     return (
       <Container>
-        <StyledLabel htmlFor={id}>{title}</StyledLabel>
+        <InputLabel id={id} title={title} />
         <StyledInput
           id={id}
           type="time"
@@ -45,15 +46,12 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const StyledLabel = styled.label`
-  font-size: 20px;
-  font-weight: bold;
-`;
-
 const StyledInput = styled.input<{ width: number; height: number }>`
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
   border-radius: 10px;
+  border: 1px solid black;
+  padding: 10px;
 `;
 
 export default TimeInput;
