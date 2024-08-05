@@ -1,17 +1,18 @@
+/** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { ChildRef } from '../../pages/form';
 import { InputLabel } from './InputLabel';
+import { css } from '@emotion/react';
 
 type ImageInputProps = {
   id: string;
   width: number;
-  height: number;
   title: string;
 };
 
 const ImageInput = forwardRef<ChildRef, ImageInputProps>(
-  ({ id, width, height, title }, ref) => {
+  ({ id, width, title }, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [curImg, setCurImg] = useState('http://via.placeholder.com/150x150');
 
@@ -32,31 +33,40 @@ const ImageInput = forwardRef<ChildRef, ImageInputProps>(
     };
 
     return (
-      <Container>
+      <Container width={width}>
         <InputLabel id={id} title={title} />
         <StyledInput
           id={id}
           type="file"
           accept="image/*"
-          width={width}
-          height={height}
           ref={inputRef}
           onChange={handleChange}
         />
-        <img src={curImg} width={150} height={150}></img>
+        <img
+          src={curImg}
+          onClick={() => inputRef.current?.click()}
+          width={150}
+          height={150}
+          css={css`
+            cursor: pointer;
+          `}
+        ></img>
       </Container>
     );
   }
 );
 
-const Container = styled.div`
+const Container = styled.div<{ width: number }>`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: ${({ width }) => `${width}px`};
+  height: auto;
 `;
 
-const StyledInput = styled.input<{ width: number; height: number }>`
-  width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
+const StyledInput = styled.input`
+  //TODO: 스크린리더 고려
+  display: none;
 `;
 
 export default ImageInput;
