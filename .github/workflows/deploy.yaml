@@ -28,7 +28,7 @@ jobs:
               build: yarn build
               spa: true
               install: yarn install
-              indexpage: ""
+              indexpage: "/client"
               buildenv: []
               rewrites: []
             context:
