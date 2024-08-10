@@ -7,11 +7,11 @@ import RangeInput from '../../common/components/RangeInput';
 import CheckboxInput from '../../common/components/CheckboxInput';
 import ImageInput from '../../common/components/ImageInput';
 
-export type ChildRef = {
-  getValue: () => RequestInfo;
+type FormChildRef = {
+  getValue: () => FormResult;
 };
 
-export type RequestInfo = {
+type FormResult = {
   id: string;
   value: string | boolean;
 };
@@ -32,10 +32,10 @@ function Form() {
     { id: 7, type: 'image', title: '목표 인증사진' },
   ];
 
-  const childRefs = useRef<ChildRef[]>([]);
+  const childRefs = useRef<FormChildRef[]>([]);
 
   const handleClick = () => {
-    const values = new Array<RequestInfo>();
+    const values = new Array<FormResult>();
     childRefs.current.forEach((ref) => {
       values.push(ref.getValue());
     });
@@ -71,7 +71,9 @@ function Form() {
                   height={30}
                   placeholder={'텍스트를 입력해주세요'}
                   title={item.title}
-                  ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+                  ref={(ref: FormChildRef) =>
+                    (childRefs.current[item.id] = ref)
+                  }
                 />
               );
 
@@ -84,7 +86,9 @@ function Form() {
                   height={30}
                   title={item.title}
                   defaultValue={item.defaultValue}
-                  ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+                  ref={(ref: FormChildRef) =>
+                    (childRefs.current[item.id] = ref)
+                  }
                 />
               );
 
@@ -97,7 +101,9 @@ function Form() {
                   height={30}
                   title={item.title}
                   defaultValue={item.defaultValue}
-                  ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+                  ref={(ref: FormChildRef) =>
+                    (childRefs.current[item.id] = ref)
+                  }
                 />
               );
 
@@ -109,7 +115,9 @@ function Form() {
                   width={320}
                   height={30}
                   title={item.title}
-                  ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+                  ref={(ref: FormChildRef) =>
+                    (childRefs.current[item.id] = ref)
+                  }
                 />
               );
 
@@ -120,7 +128,9 @@ function Form() {
                   id={`${item.id}`}
                   width={320}
                   title={item.title}
-                  ref={(ref: ChildRef) => (childRefs.current[item.id] = ref)}
+                  ref={(ref: FormChildRef) =>
+                    (childRefs.current[item.id] = ref)
+                  }
                 />
               );
 
