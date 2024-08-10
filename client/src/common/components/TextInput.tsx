@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
-import { ChildRef } from '../../pages/form';
 import { InputLabel } from './InputLabel';
 
 type TextInputProps = {
@@ -11,8 +10,8 @@ type TextInputProps = {
   title: string;
 };
 
-const TextInput = forwardRef<ChildRef, TextInputProps>(
-  ({ id, width, height, placeholder, title }, ref) => {
+const TextInput = forwardRef(
+  ({ id, width, height, placeholder, title }: TextInputProps, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => ({
@@ -21,7 +20,7 @@ const TextInput = forwardRef<ChildRef, TextInputProps>(
           return { id, value: inputRef.current.value };
         }
 
-        return { id: ' ', value: '' };
+        return { id: null, value: null };
       },
     }));
 

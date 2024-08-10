@@ -4,6 +4,8 @@ import Home from './pages/home/index';
 import Form from './pages/form/index';
 import './reset.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+import Login from './pages/login';
 import Layout from './pages/layout';
 
 const router = createBrowserRouter([
@@ -14,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: '/form',
     element: <Form />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
   },
 ]);
 

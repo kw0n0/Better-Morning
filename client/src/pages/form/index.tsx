@@ -7,40 +7,74 @@ import RangeInput from '../../common/components/RangeInput';
 import CheckboxInput from '../../common/components/CheckboxInput';
 import ImageInput from '../../common/components/ImageInput';
 
+type FormReq = Record<string, string | boolean | number>;
+
 type FormChildRef = {
-  getValue: () => FormResult;
+  getValue: () => {
+    id: keyof FormReq;
+    value: FormReq[keyof FormReq];
+  };
 };
 
-type FormResult = {
-  id: string;
-  value: string | boolean;
+type FormServerData = {
+  id: number;
+  type: string;
+  title: string;
+  defaultValue?: string;
+  name: keyof FormReq;
 };
 
 function Form() {
-  const SERVER_DATA = [
+  const SERVER_DATA: FormServerData[] = [
     {
       id: 0,
       type: 'text',
       title: '취침 30분전 행동',
+      name: 'beforeSleepAction',
     },
-    { id: 1, type: 'time', title: '기상 시간', defaultValue: '23:00' },
-    { id: 2, type: 'time', title: '취침 시간', defaultValue: '06:00' },
-    { id: 3, type: 'range', title: '컨디션 점수', defaultValue: '5' },
-    { id: 4, type: 'text', title: '컨디션 상세' },
+    {
+      id: 1,
+      type: 'time',
+      title: '기상 시간',
+      defaultValue: '23:00',
+      name: 'wakeUpTime',
+    },
+    {
+      id: 2,
+      type: 'time',
+      title: '취침 시간',
+      defaultValue: '06:00',
+      name: 'sleepTime',
+    },
+    {
+      id: 3,
+      type: 'range',
+      title: '컨디션 점수',
+      defaultValue: '5',
+      name: 'conditionScore',
+    },
+    { id: 4, type: 'text', title: '컨디션 상세', name: 'conditionDetail' },
     // { id: 5, type: 'checkbox', title: '목표 달성여부' },
-    { id: 6, type: 'image', title: '취침 전 인증사진' },
-    { id: 7, type: 'image', title: '목표 인증사진' },
+    { id: 6, type: 'image', title: '취침 전 인증사진', name: 'beforeSleepImg' },
+    { id: 7, type: 'image', title: '목표 인증사진', name: 'wakeUpImg' },
   ];
 
   const childRefs = useRef<FormChildRef[]>([]);
 
+  const submit = (req: Partial<FormReq>) => {
+    console.log(req);
+  };
+
   const handleClick = () => {
-    const values = new Array<FormResult>();
+    const req: Partial<FormReq> = {};
+
     childRefs.current.forEach((ref) => {
-      values.push(ref.getValue());
+      const { id, value } = ref.getValue();
+
+      req[id] = value;
     });
 
-    console.log('테스트', values);
+    submit(req);
   };
 
   return (
@@ -66,7 +100,7 @@ function Form() {
               return (
                 <TextInput
                   key={item.id}
-                  id={`${item.id}`}
+                  id={`${item.name}`}
                   width={320}
                   height={30}
                   placeholder={'텍스트를 입력해주세요'}
@@ -81,7 +115,7 @@ function Form() {
               return (
                 <TimeInput
                   key={item.id}
-                  id={`${item.id}`}
+                  id={`${item.name}`}
                   width={320}
                   height={30}
                   title={item.title}
@@ -96,7 +130,7 @@ function Form() {
               return (
                 <RangeInput
                   key={item.id}
-                  id={`${item.id}`}
+                  id={`${item.name}`}
                   width={320}
                   height={30}
                   title={item.title}
@@ -111,7 +145,7 @@ function Form() {
               return (
                 <CheckboxInput
                   key={item.id}
-                  id={`${item.id}`}
+                  id={`${item.name}`}
                   width={320}
                   height={30}
                   title={item.title}
@@ -125,7 +159,7 @@ function Form() {
               return (
                 <ImageInput
                   key={item.id}
-                  id={`${item.id}`}
+                  id={`${item.name}`}
                   width={320}
                   title={item.title}
                   ref={(ref: FormChildRef) =>
