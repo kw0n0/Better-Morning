@@ -16,16 +16,8 @@ type FormChildRef = {
   };
 };
 
-type FormServerData = {
-  id: number;
-  type: string;
-  title: string;
-  defaultValue?: string;
-  name: keyof FormReq;
-};
-
 function Form() {
-  const SERVER_DATA: FormServerData[] = [
+  const SERVER_DATA = [
     {
       id: 0,
       type: 'text',
