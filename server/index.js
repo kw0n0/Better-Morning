@@ -14,4 +14,12 @@ app.use(
 
 app.use('/login', loginRouter);
 
+app.use((req, res, next) => {
+  res.sendStatus(404);
+});
+
+app.use((error) => {
+  res.sendStatus(500);
+});
+
 app.listen(8080);
