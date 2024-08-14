@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
-import { ChildRef } from '../../pages/form';
 import { InputLabel } from './InputLabel';
 
 type CheckboxInputProps = {
@@ -10,8 +9,8 @@ type CheckboxInputProps = {
   title: string;
 };
 
-const TextInput = forwardRef<ChildRef, CheckboxInputProps>(
-  ({ id, width, height, title }, ref) => {
+const TextInput = forwardRef(
+  ({ id, width, height, title }: CheckboxInputProps, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => ({

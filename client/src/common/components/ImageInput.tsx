@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import { ChildRef } from '../../pages/form';
 import { InputLabel } from './InputLabel';
 import { css } from '@emotion/react';
 
@@ -11,50 +10,48 @@ type ImageInputProps = {
   title: string;
 };
 
-const ImageInput = forwardRef<ChildRef, ImageInputProps>(
-  ({ id, width, title }, ref) => {
-    const inputRef = useRef<HTMLInputElement>(null);
-    const [curImg, setCurImg] = useState('http://via.placeholder.com/150x150');
+const ImageInput = forwardRef(({ id, width, title }: ImageInputProps, ref) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [curImg, setCurImg] = useState('http://via.placeholder.com/150x150');
 
-    useImperativeHandle(ref, () => ({
-      getValue: () => {
-        if (inputRef.current) {
-          return { id, value: curImg };
-        }
+  useImperativeHandle(ref, () => ({
+    getValue: () => {
+      if (inputRef.current) {
+        return { id, value: curImg };
+      }
 
-        return { id: ' ', value: false };
-      },
-    }));
+      return { id: ' ', value: false };
+    },
+  }));
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!e.target.files || e.target.files.length <= 0) return;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length <= 0) return;
 
-      setCurImg(URL.createObjectURL(e.target.files[0]));
-    };
+    setCurImg(URL.createObjectURL(e.target.files[0]));
+  };
 
-    return (
-      <Container width={width}>
-        <InputLabel id={id} title={title} />
-        <StyledInput
-          id={id}
-          type="file"
-          accept="image/*"
-          ref={inputRef}
-          onChange={handleChange}
-        />
-        <img
-          src={curImg}
-          onClick={() => inputRef.current?.click()}
-          width={150}
-          height={150}
-          css={css`
-            cursor: pointer;
-          `}
-        ></img>
-      </Container>
-    );
-  }
-);
+  return (
+    <Container width={width}>
+      <InputLabel id={id} title={title} />
+      <StyledInput
+        id={id}
+        type="file"
+        accept="image/*"
+        ref={inputRef}
+        onChange={handleChange}
+      />
+      <img
+        src={curImg}
+        onClick={() => inputRef.current?.click()}
+        width={150}
+        height={150}
+        css={css`
+          cursor: pointer;
+        `}
+      ></img>
+    </Container>
+  );
+});
 
 const Container = styled.div<{ width: number }>`
   display: flex;

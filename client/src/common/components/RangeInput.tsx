@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
-import { ChildRef } from '../../pages/form';
 import { InputLabel } from './InputLabel';
 
 type RangeInputProps = {
@@ -11,8 +10,8 @@ type RangeInputProps = {
   defaultValue?: string;
 };
 
-const RangeInput = forwardRef<ChildRef, RangeInputProps>(
-  ({ id, width, height, title, defaultValue }, ref) => {
+const RangeInput = forwardRef(
+  ({ id, width, height, title, defaultValue }: RangeInputProps, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => ({
