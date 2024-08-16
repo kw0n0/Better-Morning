@@ -2,12 +2,9 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC = () => {
   return (
     <Container>
       <header>
@@ -20,7 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           border: 2px solid midnightblue;
         `}
       >
-        {children}
+        <Outlet />
       </main>
       <footer>
         <span>footer</span>
