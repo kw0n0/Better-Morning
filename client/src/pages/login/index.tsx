@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import TextInput from '../../common/components/TextInput';
 import Axios from '../../utils/axios';
+import { useAuth } from '../../context/AuthProvider';
 
 type LoginReq = Record<'id' | 'password', string | null>;
 
@@ -13,12 +14,15 @@ type LoginChildRef = {
 
 const Login: React.FC = () => {
   const childRefs = useRef<LoginChildRef[]>([]);
+  const { changeLoginStatus } = useAuth();
 
   async function login(req: LoginReq) {
     if (!req.id || !req.password) return;
 
-    const result = await Axios.post('/login', req);
-    console.log(result);
+    const res = await Axios.post('/login', req);
+    if (res) {
+      changeLoginStatus();
+    }
   }
 
   const handleLoginClick = () => {

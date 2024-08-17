@@ -1,25 +1,41 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext<{
   isLogin: boolean;
-  login: () => void;
-  logout: () => void;
+  changeLoginStatus: () => void;
 }>({
   isLogin: false,
-  login: () => {},
-  logout: () => {},
+  changeLoginStatus: () => {},
 });
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
 
-  const login = () => setIsLogin(true);
-  const logout = () => setIsLogin(false);
+  const changeLoginStatus = () => {
+    setIsLogin((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate('/');
+      return;
+    }
+
+    navigate('/login');
+  }, [isLogin]);
 
   return (
-    <AuthContext.Provider value={{ isLogin, login, logout }}>
+    <AuthContext.Provider value={{ isLogin, changeLoginStatus }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import withAuth from '../../utils/withAuth';
 
 function Home() {
   return (
@@ -8,4 +9,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withAuth(Home);
